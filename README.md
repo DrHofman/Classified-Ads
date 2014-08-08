@@ -6,7 +6,7 @@ Installation
 
     # Checkout the project
     $ sudo git clone https://github.com/DrHofman/Classified-Ads.git
-    $ Classified-Ads
+    $ cd Classified-Ads
 
     # Install the project dependencies
     $ npm install
