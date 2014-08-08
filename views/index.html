@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" ng-app> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" ng-app> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" ng-app> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" ng-app="besedoca"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="/css/main.css">
+
+        <script src="/js/vendor/modernizr-2.6.2.min.js"></script>
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <!-- Header -->
+        <header class="navbar navbar-fixed-top" id="top" role="banner">
+            <div class="container">
+                <div class="navbar-header">
+                    <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="/" class="navbar-brand">Classified Ads</a>
+            </div>
+                <nav class="collapse navbar-collapse bs-navbar-collapse"
+                     role="navigation" ng-controller="navbarCtrl">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/Cars"><i class="glyphicon glyphicon-plane"></i> Cars</a> </li>
+                        <li><a href="/Phones"><i class="glyphicon glyphicon-phone"></i> Phones</a></li>
+                        <li><a href="/Services"><i class="glyphicon glyphicon-wrench"></i> Services</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="#" ng-click="submitYourListing();"><i class="glyphicon glyphicon-file"></i> Submit your listing</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+        <!-- Header -->
+        
+        <!-- View -->
+        <div class="container">
+            <ng-view autoscroll ></ng-view>
+        </div>
+        <!-- View -->
+        
+        <!-- Modal -->
+        <div class="modal fade" id="submitYourListing" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" ng-controller="modalCtrl">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">Create a new listing</h4>
+              </div>
+              <div class="modal-body">
+                <div class="alert alert-danger" role="alert" ng-show="alerts">You have invalid data in your listing, please correct the relevant items and resubmit the entry. Fields with an <span class="glyphicon glyphicon-asterisk"></span> are required and fields marked in red have invalid data, please consult with the tip under the relevant filed to correct this.</div>
+                <form role="form" name="submitListing">
+                    <div class="form-group has-feedback"
+                         ng-class="feedback('listingTitle', 'group');">
+                        <label for="listingTitle">Title</label>
+                        <input type="text" class="form-control"
+                               id="listingTitle" name="listingTitle"
+                               placeholder="Enter your listing title"
+                               ng-model="listing.title" required ng-minlength="3" ng-maxlength="255">
+                        <span class="help-block"
+                              ng-show="feedback('listingTitle', 'msg');">{{feedback('listingTitle', 'msg');}}</span>
+                        <span class="glyphicon form-control-feedback"
+                              ng-class="feedback('listingTitle', 'icon');"></span>
+                    </div>
+                    <div class="form-group has-feedback"
+                         ng-class="feedback('listingPrice', 'group');">
+                        <label for="listingPrice">Price</label>
+                        <input type="number" class="form-control"
+                               id="listingPrice" name="listingPrice"
+                               placeholder="Enter your listing price"
+                               ng-model="listing.price" min="1" max="9999999">
+                        <span class="help-block"
+                              ng-show="feedback('listingPrice', 'msg');">{{feedback('listingPrice', 'msg');}}</span>
+                        <span class="glyphicon form-control-feedback"
+                              ng-class="feedback('listingPrice', 'icon');"></span>
+                    </div>
+                    <div class="form-group has-feedback"
+                         ng-class="feedback('listingDescription', 'group');">
+                        <label for="listingDescription">Description</label>
+                        <textarea class="form-control" rows="3"
+                                  id="listingDescription" name="listingDescription"
+                                  placeholder="Enter a description for your listing" 
+                                  ng-model="listing.description" required
+                                  ng-minlength="20" ng-maxlength="1000"></textarea>
+                        <span class="help-block"
+                              ng-show="feedback('listingDescription', 'msg');">{{feedback('listingDescription', 'msg');}}</span>
+                        <span class="glyphicon form-control-feedback"
+                              ng-class="feedback('listingDescription', 'icon');"></span>
+                    </div>
+                    <div class="form-group has-feedback"
+                         ng-class="feedback('listingEmail', 'group');">
+                        <label for="listingEmail">Email Address</label>
+                        <input type="email" class="form-control"
+                               id="listingEmail" name="listingEmail"
+                               placeholder="Enter your email address"
+                               ng-model="listing.email" required
+                               ng-maxlength="255">
+                        <span class="help-block"
+                              ng-show="feedback('listingEmail', 'msg');">{{feedback('listingEmail', 'msg');}}</span>
+                        <span class="glyphicon form-control-feedback"
+                              ng-class="feedback('listingEmail', 'icon');"></span>
+                    </div>
+                    <div class="form-group has-feedback"
+                         ng-class="feedback('listingPhone', 'group');">
+                        <label for="listingPhone">Phone Number</label>
+                        <input type="text" class="form-control"
+                               id="listingPhone" name="listingPhone"
+                               placeholder="Enter your phone number"
+                               ng-model="listing.phone" ng-maxlength="60">
+                        <span class="help-block"
+                              ng-show="feedback('listingPhone', 'msg');">{{feedback('listingPhone', 'msg');}}</span>
+                        <span class="glyphicon form-control-feedback"
+                              ng-class="feedback('listingPhone', 'icon');"></span>
+                    </div>
+                    <div class="form-group has-feedback"
+                         ng-class="feedback('listingCity', 'group');">
+                        <label for="listingCity">City</label>
+                        <input type="text" class="form-control"
+                               id="listingCity" name="listingCity"
+                               placeholder="Enter your city"
+                               ng-model="listing.city" required
+                               ng-minlength="2" ng-maxlength="60">
+                        <span class="help-block"
+                              ng-show="feedback('listingCity', 'msg');">{{feedback('listingCity', 'msg');}}</span>
+                        <span class="glyphicon form-control-feedback"
+                              ng-class="feedback('listingCity', 'icon');"></span>
+                    </div>
+                    <div class="form-group has-feedback"
+                         ng-class="feedback('listingCategory', 'group');">
+                        <label for="listingPhone">Category</label>
+                        <select class="form-control" ng-model="listing.category"
+                                id="listingCategory" name="listingCategory"
+                                ng-options="category.name as category.name for category in categories"
+                                required>
+                            <option value=""> -- Please select a category -- </option>
+                        </select>
+                    </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" ng-click="dismiss();">Close</button>
+                <button type="button" class="btn btn-primary" ng-click="save();">Save changes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Script -->
+        <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.17/angular.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.17/angular-route.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.17/angular-animate.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.17/angular-resource.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.17/angular-sanitize.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.17/angular-touch.min.js"></script>
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+        <script src="/js/main.js"></script>
+        <script src="/js/mainCtrl.js"></script>
+        <script src="/js/navbarCtrl.js"></script>
+        <script src="/js/modalCtrl.js"></script>
+        <script src="/js/adCtrl.js"></script>
+        <script src="/js/listingSrv.js"></script>
+    </body>
+</html>
