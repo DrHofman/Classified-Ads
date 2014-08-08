@@ -1,4 +1,3 @@
-var Q = require('Q');
 var Listings = require('../../models/listings.js');
 var listings = new Listings();
 
