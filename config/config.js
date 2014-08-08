@@ -1,7 +1,7 @@
 module.exports = {
     server : {
         //server listening port
-        port : 9000,
+        port : 80,
         ssl : {
             use_ssl : false,
             certificate : 'certs/server.pem', //certificate as pem
